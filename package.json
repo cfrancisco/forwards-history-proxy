@@ -7,9 +7,12 @@
   "scripts": {
     "start": "node ./src/index.js",
     "test": "jest",
+    "coverage": "jest --ci --coverage && codecov",
     "debug": ""
   },
   "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
     "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
@@ -40,6 +43,7 @@
     "@dojot/dojot-module-logger": "0.0.1-alpha.5",
     "@dojot/microservice-sdk": "0.1.8",
     "axios": "^0.21.1",
+    "codecov": "^3.8.1",
     "express": "^4.17.1",
     "mocha": "^8.3.0",
     "request": "^2.88.2",
