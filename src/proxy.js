@@ -1,7 +1,9 @@
-const { logger } = require('@dojot/dojot-module-logger');
+const { Logger } = require('@dojot/microservice-sdk');
 const responseHandler = require('./handlers/handleResponse');
 const influxHandler = require('./handlers/handleRequest');
 const validationHandler = require('./handlers/handleValidation');
+
+const logger = new Logger('gui-proxy');
 
 const createDataToBePassed = (req) => {
   const request = {
@@ -33,8 +35,8 @@ const handleHistoryRequest = (req) => {
   return validationHandler
     .handle(request)
     .then(influxHandler.handle)
-    .then(responseHandler.handle)
-    .catch(logger.error);
+    .then(responseHandler.handle);
+  // errors will be caught by the main thread.
 };
 
 module.exports = { handleHistoryRequest, createDataToBePassed };

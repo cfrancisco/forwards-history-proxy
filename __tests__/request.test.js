@@ -25,9 +25,22 @@ const caseOne = {
   },
 };
 
+const caseTwo = {
+  request: {
+    dateTo: null,
+    dateFrom: null,
+    lastN: 0,
+  },
+  expected:
+  {
+    title: 'Missing data',
+    description: 'No attribute was passed.',
+  },
+};
+
 describe('Unit testing to validate routes', () => {
-  const fetchData = async (deviceId) => {
-    const paramList = caseOne.request;
+  const fetchData = async (deviceId, currentCase) => {
+    const paramList = currentCase.request;
 
     const pms = new URLSearchParams(paramList);
 
@@ -39,40 +52,56 @@ describe('Unit testing to validate routes', () => {
 
   // mocking influx response
   axios.get.mockImplementation((url, headers) => {
-    expect(headers.authorization).toEqual(AUTH_TOKEN);
+    expect(headers.headers.authorization).toEqual(AUTH_TOKEN);
     return Promise.resolve({
-      data: [
-        {
-          ts: '2021-02-13T15:12:09.579Z',
-          attrs: [
-            {
-              label: 'temperature',
-              value: '10',
-            }],
+      data: {
+        data: [
+          {
+            ts: '2021-02-13T15:12:09.579Z',
+            attrs: [
+              {
+                label: 'temperature',
+                value: '10',
+              }],
+          },
+          {
+            ts: '2021-02-13T15:13:09.579Z',
+            attrs: [
+              {
+                label: 'temperature',
+                value: '14',
+              }],
+          },
+        ],
+        paging: {
         },
-        {
-          ts: '2021-02-13T15:13:09.579Z',
-          attrs: [
-            {
-              label: 'temperature',
-              value: '14',
-            }],
-        },
-      ],
-      paging: {
       },
     });
   });
 
-  it('checking if header was been passed', async () => {
+  it('checking if errors in been sent up', async (done) => {
     const deviceId = 'a1b1c1';
-    const response = await fetchData(deviceId);
-    expect(response.statusCode).toEqual(200);
+    const response = await fetchData(deviceId, caseTwo);
+    expect(response.statusCode).toEqual(400);
+    expect(response.body).toEqual(caseTwo.expected);
+    done();
   });
 
-  it('checking if the correct data manipulation', async () => {
+  it('checking if header was been passed', async (done) => {
     const deviceId = 'a1b1c1';
-    const response = await fetchData(deviceId);
+    const response = await fetchData(deviceId, caseOne);
+    expect(response.statusCode).toEqual(200);
+    done();
+  });
+
+  it('checking if the correct data manipulation', async (done) => {
+    const deviceId = 'a1b1c1';
+    const response = await fetchData(deviceId, caseOne);
     expect(response.body).toEqual(caseOne.expected);
+    done();
+  });
+
+  afterAll(async () => {
+    await new Promise(resolve => setTimeout(() => resolve(), 500));
   });
 });

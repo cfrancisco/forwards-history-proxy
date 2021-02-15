@@ -1,9 +1,12 @@
-const { logger } = require('@dojot/dojot-module-logger');
+const { Logger } = require('@dojot/microservice-sdk');
+const createError = require('http-errors');
+
+const logger = new Logger('gui-proxy');
 
 const handle = (r) => {
   const newR = { ...r };
   if (r.attr === undefined) {
-    throw new Error('No attribute was passed.');
+    return Promise.reject(createError(400, 'No attribute was passed.', { response: { status: 400, statusText: 'Missing data', data: { error: 'No attribute was passed.' } } }));
   }
 
   if (r.dateTo === undefined || r.dateTo === null) {
@@ -13,7 +16,7 @@ const handle = (r) => {
     newR.dateFrom = '1970-01-01T00:00:00.000Z';
   }
   if (r.limit === undefined || r.limit === null || r.limit === 0) {
-    newR.limit = 999;
+    newR.limit = 256; // 2999
   }
   logger.info('Params were sent correctly.');
   return Promise.resolve(newR);

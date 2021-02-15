@@ -1,5 +1,5 @@
 const { createDataToBePassed } = require('../src/proxy');
-const validationHandler = require('../src/handlers/validation');
+const validationHandler = require('../src/handlers/handleValidation');
 
 const CASE_ONE = 'caseOne';
 const CASE_TWO = 'caseTwo';
@@ -13,14 +13,15 @@ const EXPECTED_DEFAULT =
   dateFrom: '1970-01-01T00:00:00.000Z',
   dateTo: (new Date().toISOString()).split('.')[0],
   order: 'desc',
-  rawResponse: '',
-  limit: 999,
   headers: undefined,
+  rawResponse: '',
+  limit: 256,
 };
 
 const cases = {
   caseOne: {
     request: {
+      headers: {},
       params: {
         deviceId: 'a1b1c1',
       },
@@ -35,6 +36,7 @@ const cases = {
   },
   caseTwo: {
     request: {
+      headers: {},
       params: {
         deviceId: 'a1b1c1',
       },
@@ -52,6 +54,7 @@ const cases = {
   },
   caseThree: {
     request: {
+      headers: {},
       params: {
         deviceId: 'a1b1c1',
       },
@@ -71,6 +74,7 @@ const cases = {
   },
   caseFour: {
     request: {
+      headers: {},
       params: {
         deviceId: 'a1b1c1',
       },

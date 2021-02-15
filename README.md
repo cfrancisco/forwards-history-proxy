@@ -25,3 +25,23 @@ yarn test
 ```
 
 
+# Docker
+
+The following command creates a docker image to be a proxy for InfluxDB, mocking the History responses.
+
+```
+It has three optional arguments:
+ DOJOT_VERSION: Set the GUI version
+ RETRIEVER_URL:   URL to access Retriever
+ PORT: Service port
+```
+
+```shell
+docker build -f Dockerfile -t [tag name] --build-arg DOJOT_VERSION=[version] --build-arg RETRIEVER_URL=[retriever url] --build-arg PORT=[port] .
+```
+
+To run the created image:
+
+```shell
+docker run -d [-n name] <tag name>
+```

@@ -1,4 +1,4 @@
-const { logger } = require('@dojot/dojot-module-logger');
+const { Logger } = require('@dojot/microservice-sdk');
 const axios = require('axios');
 const configBase = require('../config');
 // const influxH
@@ -13,6 +13,7 @@ instance.interceptors.request.use(async config => {
   return config;
 });
 */
+const logger = new Logger('gui-proxy');
 
 const handle = async (r) => {
   const url = `${configBase.retrieverUrl}/tss/v1/devices/${r.deviceId}/attrs/${r.attr}/data`;
@@ -23,9 +24,8 @@ const handle = async (r) => {
   const pms = new URLSearchParams(paramList);
   const res = await axios.get(
     `${url}?${pms.toString()}`,
-    { authorization: r.headers },
+    { headers: { authorization: r.headers } },
   );
-  // console.log('res', res);
   return { ...r, rawResponse: res.data };
 };
 
