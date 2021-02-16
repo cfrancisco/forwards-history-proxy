@@ -24,7 +24,6 @@ const createDataToBePassed = (req) => {
     request.limit = req.query.firstN;
     request.order = 'asc';
   }
-  console.log('request', request);
   return request;
 };
 

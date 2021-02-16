@@ -5,6 +5,8 @@ const CASE_ONE = 'caseOne';
 const CASE_TWO = 'caseTwo';
 const CASE_THREE = 'caseThree';
 const CASE_FOUR = 'caseFour';
+const CASE_FIVE = 'caseFive';
+const CASE_SIX = 'caseSix';
 
 const EXPECTED_DEFAULT =
 {
@@ -13,6 +15,8 @@ const EXPECTED_DEFAULT =
   dateFrom: '1970-01-01T00:00:00.000Z',
   dateTo: (new Date().toISOString()).split('.')[0],
   order: 'desc',
+  isAllAttrs: false,
+  isMultipleAttr: false,
   headers: undefined,
   rawResponse: '',
   limit: 256,
@@ -94,10 +98,42 @@ const cases = {
       dateFrom: '2021-01-01T09:00:00.000Z',
     },
   },
+  caseFive: {
+    request: {
+      headers: {},
+      params: {
+        deviceId: 'a1b1c1',
+      },
+      query: {
+        attr: ['temperature', 'temp2'],
+      },
+    },
+    expected:
+    {
+      ...EXPECTED_DEFAULT,
+      isMultipleAttr: true,
+    },
+  },
+  caseSix: {
+    request: {
+      headers: {},
+      params: {
+        deviceId: 'a1b1c1',
+      },
+      query: {
+        attr: undefined,
+      },
+    },
+    expected:
+    {
+      ...EXPECTED_DEFAULT,
+      isAllAttrs: true,
+    },
+  },
 };
 
 describe('Testing incoming params and outcoming params', () => {
-  it('testing only passing attribute', async () => {
+  it('pass only one attribute', async () => {
     const paramList = cases[CASE_ONE].request;
     const data = createDataToBePassed(paramList);
     const result = await validationHandler.handle(data);
@@ -105,7 +141,7 @@ describe('Testing incoming params and outcoming params', () => {
     expect({ ...result, dateTo }).toEqual(cases[CASE_ONE].expected);
   });
 
-  it('testing passing attribute and lastN', async () => {
+  it('pass attribute and lastN', async () => {
     const paramList = cases[CASE_TWO].request;
     const data = createDataToBePassed(paramList);
     const result = await validationHandler.handle(data);
@@ -113,7 +149,7 @@ describe('Testing incoming params and outcoming params', () => {
     expect({ ...result, dateTo }).toEqual(cases[CASE_TWO].expected);
   });
 
-  it('testing passing dateTo and lastN', async () => {
+  it('passing dateTo and lastN', async () => {
     const paramList = cases[CASE_THREE].request;
     const data = createDataToBePassed(paramList);
     const result = await validationHandler.handle(data);
@@ -122,11 +158,27 @@ describe('Testing incoming params and outcoming params', () => {
     expect({ ...result, dateTo }).toEqual(cases[CASE_THREE].expected);
   });
 
-  it('testing passing dateTo, dateFrom and firstN', async () => {
+  it('passing dateTo, dateFrom and firstN', async () => {
     const paramList = cases[CASE_FOUR].request;
     const data = createDataToBePassed(paramList);
     const result = await validationHandler.handle(data);
     const dateTo = result.dateTo.split('.')[0]; // removing ms to checking
     expect({ ...result, dateTo }).toEqual(cases[CASE_FOUR].expected);
+  });
+
+  it('passing 2 attributes', async () => {
+    const paramList = cases[CASE_FIVE].request;
+    const data = createDataToBePassed(paramList);
+    const result = await validationHandler.handle(data);
+    const dateTo = result.dateTo.split('.')[0]; // removing ms to checking
+    expect({ ...result, dateTo }).toEqual(cases[CASE_FIVE].expected);
+  });
+
+  it('checkinc all attrs (no send attributes)', async () => {
+    const paramList = cases[CASE_SIX].request;
+    const data = createDataToBePassed(paramList);
+    const result = await validationHandler.handle(data);
+    const dateTo = result.dateTo.split('.')[0]; // removing ms to checking
+    expect({ ...result, dateTo }).toEqual(cases[CASE_SIX].expected);
   });
 });
