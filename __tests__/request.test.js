@@ -14,15 +14,11 @@ const caseOne = {
     lastN: 0,
   },
   expected:
-  {
-    data: {
-      temperature: [{
-        attr: 'temperature', device_id: 'a1b1c1', ts: '2021-02-13T15:12:09.579Z', value: '10',
-      }, {
-        attr: 'temperature', device_id: 'a1b1c1', ts: '2021-02-13T15:13:09.579Z', value: '14',
-      }],
-    },
-  },
+    [{
+      attr: 'temperature', device_id: 'a1b1c1', metadata: {}, ts: '2021-02-13T15:12:09.579Z',
+    }, {
+      attr: 'temperature', device_id: 'a1b1c1', metadata: {}, ts: '2021-02-13T15:13:09.579Z',
+    }],
 };
 
 const caseTwo = {

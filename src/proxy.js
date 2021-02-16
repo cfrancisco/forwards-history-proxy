@@ -1,9 +1,6 @@
-const { Logger } = require('@dojot/microservice-sdk');
 const responseHandler = require('./handlers/handleResponse');
 const influxHandler = require('./handlers/handleRequest');
 const validationHandler = require('./handlers/handleValidation');
-
-const logger = new Logger('gui-proxy');
 
 const createDataToBePassed = (req) => {
   const request = {
@@ -12,6 +9,8 @@ const createDataToBePassed = (req) => {
     dateTo: req.query.dateTo,
     dateFrom: req.query.dateFrom,
     limit: 0,
+    isAllAttrs: false,
+    isMultipleAttr: false,
     order: 'desc',
     headers: req.headers.authorization,
     rawResponse: '',
@@ -25,6 +24,7 @@ const createDataToBePassed = (req) => {
     request.limit = req.query.firstN;
     request.order = 'asc';
   }
+  console.log('request', request);
   return request;
 };
 

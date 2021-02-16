@@ -2,13 +2,18 @@
   "name": "gui_proxy",
   "version": "0.0.1",
   "main": "index.js",
-  "author": "Francisco Cabelo",
-  "description": "",
+  "author": {
+    "name": "Francisco Angelo Cabelo",
+    "email": "francisco.a.cabelo@gmail.com",
+    "url": "https://github.com/cfrancisco"
+  },
+  "description": "The GUI Proxy allows the Dojot GUI v1 to be compliant with InfluxDb, which is used in newer versions of Dojot.",
   "scripts": {
     "start": "node ./src/index.js",
-    "test": "jest",
+    "test": "jest --verbose",
     "coverage": "jest --ci --coverage && codecov",
-    "debug": "node ./src/index.js"
+    "debug": "node --trace-sync-io  ./src/index.js",
+    "check-licenses": "apache2-license-checker"
   },
   "jest": {
     "coverageDirectory": "./coverage/",
@@ -33,6 +38,7 @@
   "private": false,
   "devDependencies": {
     "@types/jest": "^26.0.10",
+    "apache2-license-checker": "^1.0.0",
     "eslint": "^7.19.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.21.1",
