@@ -1,4 +1,4 @@
-# GUI Proxy [![CodeFactor](https://www.codefactor.io/repository/github/cfrancisco/gui_v1_proxy/badge)](https://www.codefactor.io/repository/github/cfrancisco/gui_v1_proxy) [![codecov](https://codecov.io/gh/cfrancisco/gui_v1_proxy/branch/development/graph/badge.svg)](https://codecov.io/gh/cfrancisco/gui_v1_proxy) [![License badge](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+# GUI Proxy [![CodeFactor](https://www.codefactor.io/repository/github/cfrancisco/forwards-history-proxy/badge)](https://www.codefactor.io/repository/github/cfrancisco/forwards-history-proxy) [![codecov](https://codecov.io/gh/cfrancisco/forwards-history-proxy/branch/development/graph/badge.svg)](https://codecov.io/gh/cfrancisco/forwards-history-proxy) [![License badge](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
 The GUI Proxy allows the Dojot GUI v1 to be compliant with InfluxDb, which is used in newer versions of Dojot. To archive this 
@@ -18,7 +18,16 @@ The service was tested (i.e., yielded the same results and patterns) in the foll
 * When receiving multiple attributes, will be only used the first one. 	
 * If the device requested doesn't exist, the History endpoint returns HTTP 404 response with a message ‘device not found’. Now, it also gives HTTP 404 response, but with the message ‘attr not found’. 
 
+## Environment variables
 
+The environment variables are used in configuration parameters 
+
+| Environment variable     | Description                         |
+| ------------------------ | ----------------                    |
+| HISTORY_URL              | URL to access the History service   |
+| RETRIEVER_URL            | URL to access the Retriever service |
+| PORT                     | Port for starting the service       |
+ 
 ## Configuration
 
 ```shell
@@ -48,12 +57,13 @@ The following command creates a docker image to be a proxy for InfluxDB, mocking
 ```
 It has three optional arguments:
  DOJOT_VERSION: Set the GUI version
- RETRIEVER_URL:   URL to access Retriever
- PORT: Service port
+ HISTORY_URL: URL to access the History service
+ RETRIEVER_URL: URL to access the Retriever service
+ PORT: Service's port
 ```
 
 ```shell
-docker build -f Dockerfile -t [tag name] --build-arg DOJOT_VERSION=[version] --build-arg RETRIEVER_URL=[retriever url] --build-arg PORT=[port] .
+docker build -f Dockerfile -t [tag name] --build-arg DOJOT_VERSION=[version] --build-arg RETRIEVER_URL=[retriever url] --build-arg HISTORY_URL=[history url] --build-arg PORT=[port] .
 ```
 
 To run the created image:
