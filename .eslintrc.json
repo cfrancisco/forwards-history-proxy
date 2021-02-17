@@ -4,12 +4,10 @@
     "node": true,
     "jest": true
   },
-  "extends": ["airbnb-base"],
+  "extends": [
+    "airbnb-base"
+  ],
   "rules": {
-    "import/no-unresolved": "off",
-    "arrow-parens": "off",
-    "implicit-arrow-linebreak": "off",
-    "operator-linebreak": "off",
-    "function-paren-newline": "off"
+    "import/no-unresolved": "off"
   }
 }

@@ -8,8 +8,7 @@ const CASE_FOUR = 'caseFour';
 const CASE_FIVE = 'caseFive';
 const CASE_SIX = 'caseSix';
 
-const EXPECTED_DEFAULT =
-{
+const EXPECTED_DEFAULT = {
   deviceId: 'a1b1c1',
   attr: 'temperature',
   dateFrom: '1970-01-01T00:00:00.000Z',

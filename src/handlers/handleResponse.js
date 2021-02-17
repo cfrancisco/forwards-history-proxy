@@ -3,7 +3,7 @@ const createError = require('http-errors');
 
 const logger = new Logger('gui-proxy');
 
-const parseOneAttr = (deviceId, attr, data) => data.map(element => {
+const parseOneAttr = (deviceId, attr, data) => data.map((element) => {
   const newEl = { device_id: deviceId };
   newEl.ts = element.ts;
   newEl.value = element.value;
@@ -14,8 +14,8 @@ const parseOneAttr = (deviceId, attr, data) => data.map(element => {
 
 const parseAllAttr = (deviceId, data) => {
   const objRtn = {};
-  data.forEach(element => {
-    element.attrs.forEach(attr => {
+  data.forEach((element) => {
+    element.attrs.forEach((attr) => {
       const newEl = { device_id: deviceId };
       const { value, label } = attr;
       newEl.ts = element.ts;
