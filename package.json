@@ -50,7 +50,7 @@
     "@dojot/microservice-sdk": "0.1.9",
     "axios": "^0.21.1",
     "codecov": "^3.8.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "http-errors": "^1.8.0",
     "mocha": "^8.3.0",
     "request": "^2.88.2",
